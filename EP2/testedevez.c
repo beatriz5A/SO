@@ -6,8 +6,10 @@
 void *function_p0(void *ptr );
 void *function_p1(void *ptr );
 
-//variavel global que controla a 'vez'
 int count = 0;
+
+//variavel global que controla a 'vez'
+int vez = 0;
 
 //estrutura que representa uma thread e guarda tambem seu id e a variavel 'outro'
 typedef struct {
@@ -30,8 +32,10 @@ int main() {
 
     int i = 0;
     
-    while(1){
+    printf("Valor inicial de count: %d\n\n", count);
+    while(i<=9){
 
+        
         //cria duas threads, p0 e p1
         P p0 = criarThread(0, 1);
         P p1 = criarThread(1, 0);
@@ -42,7 +46,6 @@ int main() {
         pthread_create(&(p1->thread), NULL, function_p1, (void*) "Executando");
         
         i++;
-        printf("%d threads executadas\n\n\n\n", i);
     }
 
     exit(0);
@@ -53,10 +56,10 @@ int main() {
 //metodo que representa a secao critica
 void secao_critica(P p) {
 
-    printf("Count: %d\n", count);
-    count++;
-    
     printf("Thread %d na seção crítica\n", p->meu_id);
+    count++;
+    printf("Count: %d\n", count); 
+    
 }
 
 //metodo que representa a secao nao critica
@@ -70,12 +73,10 @@ void *function_p0(void *ptr ){
 
     P p0 = criarThread(0, 1);
 
-    while(count != p0->meu_id);
+    while(vez != p0->meu_id);
 
     secao_critica(p0);
-
-    count = p0->outro;
-
+    vez = p0->outro;
     secao_nao_critica(p0->meu_id);
 }
 
@@ -84,11 +85,9 @@ void *function_p1(void *ptr ){
 
     P p1 = criarThread(1, 0);
 
-    while(count != p1->meu_id);
+    while(vez != p1->meu_id);
 
     secao_critica(p1);
-
-    count = p1->outro;
-
+    vez = p1->outro;
     secao_nao_critica(p1->meu_id);
 }
