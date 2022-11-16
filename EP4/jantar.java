@@ -1,6 +1,4 @@
-package EP4;
-
-public class jantar { // classe principal
+public class Jantar { // classe principal
     public static void main(String[] args) {
         Mesa mesa = new Mesa(); // instância de Mesa
         for (int filosofo = 0; filosofo < 5; filosofo++) { // iteração que cria 5 threads de 5 filósofos diferentes

@@ -1,8 +1,6 @@
-package EP4;
-
 import java.util.concurrent.Semaphore;
 
-public class jantarSemaforo { // classe principal
+public class JantarSemaforo { // classe principal
     public static void main(String[] args) {
         Semaforo.Mesa mesa = new Semaforo.Mesa(); // instância de Mesa
         for (int filosofo = 0; filosofo < 5; filosofo++) { // iteração que cria 5 threads de 5 filósofos diferentes
